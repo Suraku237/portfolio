@@ -6,6 +6,7 @@ export const profile = {
   linkedin: 'https://www.linkedin.com/in/kwete-ngnouba-junior-rayan-643b97402/',
   email: 'kwetejunior9@gmail.com',
   avatar: 'https://avatars.githubusercontent.com/u/224432643?v=4',
+  photo: '/kwete-junior.jpg',
   verifiedAt: '2026-09-11',
   repositorySnapshot: 29,
 }
@@ -140,11 +141,82 @@ export const projects: Project[] = [
   },
 ]
 
+export interface Game {
+  id: string
+  name: string
+  tagline: string
+  description: string
+  genre: string
+  video?: string
+  repository?: string
+}
+
+export const games: Game[] = [
+  {
+    id: 'grid-survival',
+    name: 'Grid Survival',
+    tagline: 'Think fast. Hold your ground.',
+    description: 'A game project centered on surviving a grid-based challenge. Gameplay footage and a direct repository link can be connected here when they are publicly available.',
+    genre: 'Survival game',
+  },
+  {
+    id: 'math-runner',
+    name: 'Math Runner',
+    tagline: 'Run further. Think faster.',
+    description: 'A game project that brings movement and mathematics into the same experience. This showcase is ready for its gameplay recording and public source link.',
+    genre: 'Educational runner',
+  },
+]
+
 export const skillGroups = [
-  { name: 'Languages', description: 'The building blocks.', skills: ['JavaScript', 'Python', 'Dart', 'SQL', 'HTML', 'CSS'] },
-  { name: 'Frontend & mobile', description: 'Interfaces people interact with.', skills: ['React', 'Flutter', 'Vite', 'Provider'] },
-  { name: 'Backend & data', description: 'What makes it all work.', skills: ['Node.js', 'Express', 'Flask', 'FastAPI', 'MySQL', 'SQLAlchemy'] },
-  { name: 'Tools & delivery', description: 'From an idea to a shared project.', skills: ['Git & GitHub', 'Docker Compose', 'RabbitMQ', 'REST APIs', 'Agile', 'Scrum'] },
+  {
+    name: 'Languages',
+    description: 'The building blocks.',
+    skills: [
+      { name: 'JavaScript', icon: 'javascript', color: '#f0c419' },
+      { name: 'Python', icon: 'python', color: '#3776ab' },
+      { name: 'Dart', icon: 'dart', color: '#0175c2' },
+      { name: 'SQL', icon: 'database', color: '#6d5f86' },
+      { name: 'HTML', icon: 'html', color: '#e34f26' },
+      { name: 'CSS', icon: 'css', color: '#663399' },
+    ],
+  },
+  {
+    name: 'Frontend & mobile',
+    description: 'Interfaces people interact with.',
+    skills: [
+      { name: 'React', icon: 'react', color: '#149eca' },
+      { name: 'Flutter', icon: 'flutter', color: '#02569b' },
+      { name: 'Vite', icon: 'vite', color: '#646cff' },
+      { name: 'Provider', icon: 'provider', color: '#7a5aa6' },
+    ],
+  },
+  {
+    name: 'Backend & data',
+    description: 'What makes it all work.',
+    skills: [
+      { name: 'Node.js', icon: 'node', color: '#339933' },
+      { name: 'Express', icon: 'express', color: '#35313b' },
+      { name: 'Flask', icon: 'flask', color: '#35313b' },
+      { name: 'FastAPI', icon: 'fastapi', color: '#009688' },
+      { name: 'MySQL', icon: 'mysql', color: '#4479a1' },
+      { name: 'SQLAlchemy', icon: 'sqlalchemy', color: '#d71f00' },
+    ],
+  },
+  {
+    name: 'Tools, CI/CD & delivery',
+    description: 'From an idea to a reliable release.',
+    skills: [
+      { name: 'Git & GitHub', icon: 'git', color: '#f05032' },
+      { name: 'Jenkins', icon: 'jenkins', color: '#d24939' },
+      { name: 'GitHub Actions', icon: 'github-actions', color: '#2088ff' },
+      { name: 'Docker Compose', icon: 'docker', color: '#2496ed' },
+      { name: 'RabbitMQ', icon: 'rabbitmq', color: '#ff6600' },
+      { name: 'REST APIs', icon: 'api', color: '#7253be' },
+      { name: 'Agile', icon: 'agile', color: '#648263' },
+      { name: 'Scrum', icon: 'scrum', color: '#a76e3c' },
+    ],
+  },
 ]
 
 export const qualification = {

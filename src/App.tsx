@@ -1,14 +1,20 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import {
   ArrowDown, ArrowDownRight, ArrowRight, ArrowUpRight, Award, BookOpen,
-  Braces, Check, ChevronDown, Code2, ExternalLink, GitBranch,
-  GraduationCap, Layers3, Leaf, Mail, Menu, Monitor,
-  Radio, Server, Sparkles, Sprout, Terminal, Ticket, X,
+  Boxes, Braces, Check, ChevronDown, Code2, Database, ExternalLink, GitBranch,
+  Gamepad2, GraduationCap, Layers3, Leaf, Mail, Menu, Monitor, Play,
+  Radio, RefreshCw, Server, Sparkles, Sprout, Terminal, Ticket, Users, X,
 } from 'lucide-react'
+import type { IconType } from 'react-icons'
+import {
+  SiCss, SiDart, SiDocker, SiExpress, SiFastapi, SiFlask, SiFlutter,
+  SiGit, SiGithubactions, SiHtml5, SiJavascript, SiJenkins, SiMysql,
+  SiNodedotjs, SiPython, SiRabbitmq, SiReact, SiSqlalchemy, SiVite,
+} from 'react-icons/si'
 import { Github, Linkedin } from './components/SocialIcons'
-import { categories, profile, projects, qualification, skillGroups } from './data/portfolio'
-import type { Category, Project } from './data/portfolio'
+import { categories, games, profile, projects, qualification, skillGroups } from './data/portfolio'
+import type { Category, Game, Project } from './data/portfolio'
 import { useGitHub } from './hooks/useGitHub'
 import './App.css'
 
@@ -22,10 +28,43 @@ function ExternalLinkButton({ href, children, className = '', label }: {
 
 const navigation = [
   { id: 'work', label: 'Work' },
+  { id: 'games', label: 'Games' },
   { id: 'about', label: 'About' },
   { id: 'skills', label: 'Skills' },
   { id: 'credentials', label: 'Credentials' },
 ]
+
+const technologyIcons: Record<string, IconType> = {
+  javascript: SiJavascript,
+  python: SiPython,
+  dart: SiDart,
+  html: SiHtml5,
+  css: SiCss,
+  react: SiReact,
+  flutter: SiFlutter,
+  vite: SiVite,
+  node: SiNodedotjs,
+  express: SiExpress,
+  flask: SiFlask,
+  fastapi: SiFastapi,
+  mysql: SiMysql,
+  sqlalchemy: SiSqlalchemy,
+  git: SiGit,
+  jenkins: SiJenkins,
+  'github-actions': SiGithubactions,
+  docker: SiDocker,
+  rabbitmq: SiRabbitmq,
+}
+
+function TechnologyIcon({ icon }: { icon: string }) {
+  const BrandIcon = technologyIcons[icon]
+  if (BrandIcon) return <BrandIcon aria-hidden="true" />
+  if (icon === 'database') return <Database aria-hidden="true" />
+  if (icon === 'provider') return <Boxes aria-hidden="true" />
+  if (icon === 'api') return <Braces aria-hidden="true" />
+  if (icon === 'agile') return <RefreshCw aria-hidden="true" />
+  return <Users aria-hidden="true" />
+}
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -164,14 +203,94 @@ function ProjectDialog({ project, onClose }: { project: Project | null; onClose:
   </dialog>
 }
 
+function GameArtwork({ game }: { game: Game }) {
+  if (game.id === 'grid-survival') {
+    return <div className="game-art grid-survival-art" aria-hidden="true">
+      <span className="game-hud">WAVE 07 <i /> SCORE 02480</span>
+      <div className="survival-grid">{Array.from({ length: 30 }, (_, index) => <i key={index} className={index === 14 ? 'player-cell' : index % 7 === 0 ? 'danger-cell' : ''} />)}</div>
+      <span className="survival-player"><Gamepad2 size={22} /></span>
+      <span className="game-art-label">STAY INSIDE THE GRID</span>
+    </div>
+  }
+
+  return <div className="game-art math-runner-art" aria-hidden="true">
+    <span className="game-hud">DISTANCE 1,240M <i /> STREAK ×8</span>
+    <div className="runner-equation"><span>12</span><b>+</b><span>7</span><b>=</b><strong>?</strong></div>
+    <div className="runner-track"><span className="runner-character">K</span>{[19, 21, 17].map((answer) => <i key={answer}>{answer}</i>)}</div>
+    <span className="game-art-label">CHOOSE. RUN. LEVEL UP.</span>
+  </div>
+}
+
+function GameVideo({ game }: { game: Game }) {
+  return <div className="game-video">
+    {game.video ? <video controls preload="metadata" aria-label={`${game.name} gameplay video`}>
+      <source src={game.video} />
+      Your browser does not support embedded video.
+    </video> : <>
+      <GameArtwork game={game} />
+      <div className="video-placeholder">
+        <span className="video-play"><Play size={21} fill="currentColor" /></span>
+        <span><strong>Gameplay video coming soon</strong><small>A dedicated video space is ready.</small></span>
+      </div>
+    </>}
+  </div>
+}
+
 function App() {
   const [category, setCategory] = useState<Category>('All projects')
   const [showAll, setShowAll] = useState(false)
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
   const projectTrigger = useRef<HTMLButtonElement | null>(null)
+  const scrollProgress = useRef<HTMLDivElement | null>(null)
   const github = useGitHub()
   const filteredProjects = projects.filter((project) => category === 'All projects' || project.categories.includes(category))
   const visibleProjects = category === 'All projects' && !showAll ? filteredProjects.slice(0, 4) : filteredProjects
+
+  useLayoutEffect(() => {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reducedMotion) return
+
+    document.documentElement.classList.add('reveal-enabled')
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible')
+          observer.unobserve(entry.target)
+        }
+      }
+    }, { threshold: 0.12, rootMargin: '0px 0px -7% 0px' })
+
+    const elements = document.querySelectorAll('[data-reveal]:not(.is-visible)')
+    elements.forEach((element) => observer.observe(element))
+    return () => observer.disconnect()
+  }, [category, showAll])
+
+  useEffect(() => {
+    if (!scrollProgress.current) return
+    let frame = 0
+
+    function updateProgress() {
+      const indicator = scrollProgress.current
+      if (!indicator) return
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight
+      const progress = scrollable > 0 ? Math.min(window.scrollY / scrollable, 1) : 0
+      indicator.style.transform = `scaleX(${progress})`
+      frame = 0
+    }
+
+    function onScroll() {
+      if (!frame) frame = window.requestAnimationFrame(updateProgress)
+    }
+
+    updateProgress()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+      if (frame) window.cancelAnimationFrame(frame)
+    }
+  }, [])
 
   function openProject(project: Project, trigger: HTMLButtonElement) {
     projectTrigger.current = trigger
@@ -185,21 +304,22 @@ function App() {
 
   return <>
     <a className="skip-link" href="#main">Skip to content</a>
+    <div ref={scrollProgress} className="scroll-progress" aria-hidden="true" />
     <Header />
     <main id="main">
       <section id="home" className="hero container">
-        <div className="hero-copy">
+        <div className="hero-copy" data-reveal="left">
           <div className="eyebrow hero-eyebrow"><span className="status-dot" /> BUILDING. LEARNING. EVOLVING.</div>
           <h1>Turning ideas<br />into things<br />that <span className="hero-accent">matter<svg viewBox="0 0 295 15" fill="none" aria-hidden="true"><path d="M3 10C75 1 185 1 291 7M26 13C101 5 201 5 272 10" /></svg></span><span className="purple-period">.</span></h1>
           <p className="hero-description">Hi, I&apos;m <strong>Kwete Junior</strong> — a software developer building thoughtful web experiences, useful mobile apps, and the systems behind them.</p>
           <div className="hero-actions"><a href="#work" className="button button-primary">Explore my work <ArrowDownRight size={19} /></a><ExternalLinkButton href={profile.github} className="hero-github"><Github size={18} /> My GitHub <ArrowUpRight size={14} /></ExternalLinkButton></div>
           <div className="hero-note"><span className="tiny-avatars"><Code2 size={15} /><Layers3 size={15} /><Terminal size={15} /></span><span>Web, mobile & everything in between.</span></div>
         </div>
-        <HeroArtwork />
+        <div data-reveal="right"><HeroArtwork /></div>
         <a className="scroll-note" href="#highlights"><span>THERE&apos;S MORE BELOW</span><ArrowDown size={14} /></a>
       </section>
 
-      <section id="highlights" className="highlights container" aria-label="Portfolio highlights">
+      <section id="highlights" className="highlights container" aria-label="Portfolio highlights" data-reveal="up">
         <div className="highlight-intro"><span className="eyebrow">SMALL STEPS.</span><strong>Meaningful progress.</strong><span className="snapshot-label">{github.status === 'live' ? 'Repository count synced with GitHub' : `GitHub snapshot · Sep 11, 2026${github.status === 'loading' ? ' · Updating' : ''}`}</span></div>
         <div className="stat"><strong>{String(github.repositories).padStart(2, '0')}<span>↗</span></strong><span>Public repositories</span></div>
         <div className="stat"><strong>{String(projects.length).padStart(2, '0')}</strong><span>Selected projects</span></div>
@@ -208,10 +328,10 @@ function App() {
       </section>
 
       <section id="work" className="section container">
-        <div className="section-heading"><div><span className="eyebrow"><span className="section-index">01 /</span> SELECTED WORK</span><h2>A few things I&apos;ve <span className="serif-word">built.</span></h2></div><p>Real problems. Thoughtful solutions.<br />A little bit of me in every project.</p></div>
+        <div className="section-heading" data-reveal="up"><div><span className="eyebrow"><span className="section-index">01 /</span> SELECTED WORK</span><h2>A few things I&apos;ve <span className="serif-word">built.</span></h2></div><p>Real problems. Thoughtful solutions.<br />A little bit of me in every project.</p></div>
         <div className="work-toolbar"><div className="project-filters" role="group" aria-label="Filter projects">{categories.map((item) => <button key={item} aria-pressed={category === item} onClick={() => { setCategory(item); setShowAll(false) }}>{item}{item === 'All projects' && <span>{projects.length}</span>}</button>)}</div><span className="work-caption">A mix of teamwork & exploration <ArrowDownRight size={15} /></span></div>
         <p className="sr-only" role="status">Showing {visibleProjects.length} of {filteredProjects.length} {category.toLowerCase()}.</p>
-        <div className="projects-grid">{visibleProjects.map((project) => <article className="project-card" key={project.id}>
+        <div className="projects-grid">{visibleProjects.map((project) => <article className="project-card" key={project.id} data-reveal="up">
           <button className="project-preview-button" onClick={(event) => openProject(project, event.currentTarget)} aria-label={`Explore ${project.name}`}>
             <ProjectPreview id={project.id} /><span className="preview-open"><ArrowUpRight size={23} /></span>
           </button>
@@ -222,42 +342,61 @@ function App() {
         {category === 'All projects' && <div className="more-projects"><button className="button button-secondary" onClick={() => setShowAll(!showAll)} aria-expanded={showAll}>{showAll ? 'Show selected projects' : 'Two more from the workshop'}<ChevronDown size={17} className={showAll ? 'rotate-icon' : ''} /></button><ExternalLinkButton href={`${profile.github}?tab=repositories`} className="text-link">All repositories on GitHub <ArrowUpRight size={15} /></ExternalLinkButton></div>}
       </section>
 
+      <section id="games" className="games-section">
+        <div className="container">
+          <div className="section-heading games-heading" data-reveal="up"><div><span className="eyebrow"><span className="section-index">02 /</span> GAME LAB</span><h2>Playful ideas.<br />Built to be <span className="serif-word">played.</span></h2></div><p>A dedicated home for my game projects,<br />their stories, and gameplay footage.</p></div>
+          <div className="games-grid">{games.map((game, index) => <article className={`game-card game-card-${game.id}`} key={game.id} data-reveal={index % 2 === 0 ? 'left' : 'right'}>
+            <GameVideo game={game} />
+            <div className="game-copy">
+              <div className="game-meta"><span>0{index + 1}</span><span><Gamepad2 size={13} /> {game.genre}</span></div>
+              <h3>{game.name}</h3>
+              <p className="game-tagline">{game.tagline}</p>
+              <p>{game.description}</p>
+              <ExternalLinkButton href={game.repository ?? `${profile.github}?tab=repositories`} className="text-link">
+                {game.repository ? 'View game source' : 'Explore my GitHub'} <ArrowUpRight size={15} />
+              </ExternalLinkButton>
+            </div>
+          </article>)}</div>
+          <p className="games-note" data-reveal="up"><Play size={14} /> To publish gameplay, add MP4/WebM files in <code>public/videos</code> and set each game&apos;s video path in the portfolio data.</p>
+        </div>
+      </section>
+
       <section id="about" className="about-section">
         <div className="container about-grid">
-          <div className="about-visual"><div className="about-topline"><span>THE PERSON BEHIND THE CODE</span><Sparkles size={18} /></div><div className="profile-art"><div className="profile-ring" /><img src={profile.avatar} alt="Kwete Junior's GitHub avatar" width="144" height="144" loading="lazy" /><span className="profile-label"><span className="status-dot" /> @Suraku237</span><span className="profile-orbit-icon"><Code2 size={24} /></span></div><div className="about-visual-bottom"><strong>Curiosity-led.<br />Purpose-driven.</strong><ArrowUpRight size={37} strokeWidth={1.2} /></div></div>
-          <div className="about-copy"><span className="eyebrow"><span className="section-index">02 /</span> A LITTLE ABOUT ME</span><h2>A builder&apos;s mindset.<br />A learner&apos;s <span className="serif-word">curiosity.</span></h2><p>I&apos;m {profile.name}, a developer who likes connecting the dots — between an idea and an interface, a mobile app and its API, a problem and a practical solution.</p><p>My projects span digital queues, education, school-management systems, and language tools. Some are team efforts, others are experiments. Each one is a chance to learn something and build it a little better.</p><p>Alongside code, I&apos;ve completed Google&apos;s Project Management specialization. It brings a useful second perspective: not just how to build, but how to plan, collaborate, and move work forward.</p><div className="about-values"><span><Code2 size={17} /> Build with intention</span><span><BookOpen size={17} /> Keep learning</span><span><GitBranch size={17} /> Grow together</span></div><ExternalLinkButton href={profile.linkedin} className="text-link">More about my journey <ArrowUpRight size={16} /></ExternalLinkButton></div>
+          <div className="about-visual" data-reveal="left"><div className="about-topline"><span>THE PERSON BEHIND THE CODE</span><Sparkles size={18} /></div><div className="personal-photo-frame"><img src={profile.photo} alt="Kwete Junior" width="768" height="1020" loading="lazy" /><span className="photo-corner photo-corner-top" /><span className="photo-corner photo-corner-bottom" /><span className="profile-label"><span className="status-dot" /> @Suraku237</span><span className="profile-orbit-icon"><Code2 size={24} /></span></div><div className="about-visual-bottom"><strong>Curiosity-led.<br />Purpose-driven.</strong><ArrowUpRight size={37} strokeWidth={1.2} /></div></div>
+          <div className="about-copy" data-reveal="right"><span className="eyebrow"><span className="section-index">03 /</span> A LITTLE ABOUT ME</span><h2>A builder&apos;s mindset.<br />A learner&apos;s <span className="serif-word">curiosity.</span></h2><p>I&apos;m {profile.name}, a developer who likes connecting the dots — between an idea and an interface, a mobile app and its API, a problem and a practical solution.</p><p>My projects span digital queues, education, school-management systems, and language tools. Some are team efforts, others are experiments. Each one is a chance to learn something and build it a little better.</p><p>Alongside code, I&apos;ve completed Google&apos;s Project Management specialization. It brings a useful second perspective: not just how to build, but how to plan, collaborate, and move work forward.</p><div className="about-values"><span><Code2 size={17} /> Build with intention</span><span><BookOpen size={17} /> Keep learning</span><span><GitBranch size={17} /> Grow together</span></div><ExternalLinkButton href={profile.linkedin} className="text-link">More about my journey <ArrowUpRight size={16} /></ExternalLinkButton></div>
         </div>
       </section>
 
       <section id="skills" className="section container">
-        <div className="section-heading"><div><span className="eyebrow"><span className="section-index">03 /</span> MY TOOLKIT</span><h2>The right tools.<br className="mobile-break" /> An open <span className="serif-word">mind.</span></h2></div><p>Technologies I&apos;ve used in public projects.<br />Always room for something new.</p></div>
+        <div className="section-heading" data-reveal="up"><div><span className="eyebrow"><span className="section-index">04 /</span> MY TOOLKIT</span><h2>The right tools.<br className="mobile-break" /> An open <span className="serif-word">mind.</span></h2></div><p>Technologies I&apos;ve used in public projects.<br />Always room for something new.</p></div>
         <div className="skills-grid">{skillGroups.map((group, index) => {
           const Icon = [Code2, Monitor, Server, GitBranch][index]
-          return <article className="skill-card" key={group.name}><div className="skill-card-top"><span className="skill-icon"><Icon size={23} strokeWidth={1.5} /></span><span>0{index + 1}</span></div><h3>{group.name}</h3><p>{group.description}</p><div className="skill-tags">{group.skills.map((skill) => <span key={skill}>{skill}</span>)}</div></article>
+          return <article className="skill-card" key={group.name} data-reveal="up"><div className="skill-card-top"><span className="skill-icon"><Icon size={23} strokeWidth={1.5} /></span><span>0{index + 1}</span></div><h3>{group.name}</h3><p>{group.description}</p><div className="skill-tags">{group.skills.map((skill) => <span className="technology-chip" key={skill.name} style={{ color: skill.color }}><TechnologyIcon icon={skill.icon} /><span>{skill.name}</span></span>)}</div></article>
         })}</div>
         <p className="toolkit-note"><Sparkles size={15} /> No progress bars or made-up percentages. Just tools I&apos;ve worked with, and a willingness to keep improving.</p>
       </section>
 
       <section id="credentials" className="credentials-section">
         <div className="container">
-          <div className="section-heading"><div><span className="eyebrow"><span className="section-index">04 /</span> LEARNING, WITH RECEIPTS</span><h2>Curiosity meets <span className="serif-word">commitment.</span></h2></div><p>Not just collecting skills.<br />Putting in the work to earn them.</p></div>
+          <div className="section-heading" data-reveal="up"><div><span className="eyebrow"><span className="section-index">05 /</span> LEARNING, WITH RECEIPTS</span><h2>Curiosity meets <span className="serif-word">commitment.</span></h2></div><p>Not just collecting skills.<br />Putting in the work to earn them.</p></div>
           <div className="credential-layout">
-            <article className="credential-card"><div className="credential-top"><span className="google-wordmark" aria-label="Google"><span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span></span><span className="verified-badge"><Check size={12} /> Verified credential</span></div><div className="credential-award"><Award size={49} strokeWidth={1.2} /></div><span className="eyebrow">SPECIALIZATION CERTIFICATE</span><h3>Google Project<br />Management</h3><p>From the first project plan to the final retrospective. Seven courses in planning, delivery, Agile, and collaboration.</p><div className="credential-recipient"><span>AWARDED TO</span><strong>{profile.fullName}</strong></div><div className="credential-details"><span><span className="status-dot" /> Completed {qualification.completedAt}</span><span>Via Coursera</span></div><ExternalLinkButton href={qualification.url} className="button button-primary">View official credential <ArrowUpRight size={17} /></ExternalLinkButton></article>
-            <div className="course-list"><div className="course-list-heading"><h3>One journey. Seven milestones.</h3><span>{qualification.courses.length} / {qualification.courses.length} completed</span></div>{qualification.courses.map((course, index) => <ExternalLinkButton key={course.id} href={`https://www.coursera.org/account/accomplishments/certificate/${course.id}`} className="course-row" label={`Verify ${course.title} certificate`}><span className="course-number">{String(index + 1).padStart(2, '0')}</span><span className="course-name">{course.title}<small>Google · {course.date}</small></span><ArrowUpRight size={17} /></ExternalLinkButton>)}<p className="credential-footnote"><Check size={14} /> Every credential links to its public Coursera verification.</p></div>
+            <article className="credential-card" data-reveal="left"><div className="credential-top"><span className="google-wordmark" aria-label="Google"><span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span></span><span className="verified-badge"><Check size={12} /> Verified credential</span></div><div className="credential-award"><Award size={49} strokeWidth={1.2} /></div><span className="eyebrow">SPECIALIZATION CERTIFICATE</span><h3>Google Project<br />Management</h3><p>From the first project plan to the final retrospective. Seven courses in planning, delivery, Agile, and collaboration.</p><div className="credential-recipient"><span>AWARDED TO</span><strong>{profile.fullName}</strong></div><div className="credential-details"><span><span className="status-dot" /> Completed {qualification.completedAt}</span><span>Via Coursera</span></div><ExternalLinkButton href={qualification.url} className="button button-primary">View official credential <ArrowUpRight size={17} /></ExternalLinkButton></article>
+            <div className="course-list" data-reveal="right"><div className="course-list-heading"><h3>One journey. Seven milestones.</h3><span>{qualification.courses.length} / {qualification.courses.length} completed</span></div>{qualification.courses.map((course, index) => <ExternalLinkButton key={course.id} href={`https://www.coursera.org/account/accomplishments/certificate/${course.id}`} className="course-row" label={`Verify ${course.title} certificate`}><span className="course-number">{String(index + 1).padStart(2, '0')}</span><span className="course-name">{course.title}<small>Google · {course.date}</small></span><ArrowUpRight size={17} /></ExternalLinkButton>)}<p className="credential-footnote"><Check size={14} /> Every credential links to its public Coursera verification.</p></div>
           </div>
         </div>
       </section>
 
       <section className="section container github-section" aria-labelledby="github-heading">
-        <div className="github-intro"><span className="eyebrow"><Github size={16} /> THE JOURNEY CONTINUES</span><h2 id="github-heading">A work in <span className="serif-word">progress.</span><br />And proud of it.</h2><p>The projects here are just part of the story. Follow my repositories, explore the code, and see what I&apos;m working on next.</p><ExternalLinkButton href={profile.github} className="button button-secondary"><Github size={17} /> Follow on GitHub <ArrowUpRight size={17} /></ExternalLinkButton></div>
-        <div className="github-panel"><div className="github-panel-heading"><div><Github size={23} /><strong>{profile.username}<span>Building in public</span></strong></div><span className={`github-status ${github.status === 'live' ? 'is-live' : ''}`} role="status"><span className="status-dot" />{github.status === 'live' ? 'Live from GitHub' : github.status === 'loading' ? 'Connecting' : 'Verified snapshot'}</span></div>
+        <div className="github-intro" data-reveal="left"><span className="eyebrow"><Github size={16} /> THE JOURNEY CONTINUES</span><h2 id="github-heading">A work in <span className="serif-word">progress.</span><br />And proud of it.</h2><p>The projects here are just part of the story. Follow my repositories, explore the code, and see what I&apos;m working on next.</p><ExternalLinkButton href={profile.github} className="button button-secondary"><Github size={17} /> Follow on GitHub <ArrowUpRight size={17} /></ExternalLinkButton></div>
+        <div className="github-panel" data-reveal="right"><div className="github-panel-heading"><div><Github size={23} /><strong>{profile.username}<span>Building in public</span></strong></div><span className={`github-status ${github.status === 'live' ? 'is-live' : ''}`} role="status"><span className="status-dot" />{github.status === 'live' ? 'Live from GitHub' : github.status === 'loading' ? 'Connecting' : 'Verified snapshot'}</span></div>
           <div className="github-panel-label">{github.status === 'live' ? 'RECENTLY UPDATED REPOSITORIES' : 'EXPLORE THE SOURCE'}</div>
           {github.status === 'live' && github.recent.length > 0 ? github.recent.map((repo) => <ExternalLinkButton href={repo.html_url} className="repo-row" key={repo.name}><span className="repo-icon"><GitBranch size={18} /></span><span><strong>{repo.name}</strong><small>{repo.language ?? 'Repository'} · Updated {new Date(repo.updated_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</small></span><ArrowUpRight size={17} /></ExternalLinkButton>) : projects.slice(0, 3).map((project) => <ExternalLinkButton href={project.links[0].url} className="repo-row" key={project.id}><span className="repo-icon"><GitBranch size={18} /></span><span><strong>{project.name}</strong><small>{project.tags.slice(0, 2).join(' · ')} · Featured project</small></span><ArrowUpRight size={17} /></ExternalLinkButton>)}
           <div className="github-panel-footer">{github.status === 'live' ? 'Public activity. Real projects. Always evolving.' : github.status === 'loading' ? 'Fetching public updates from GitHub…' : 'Live updates unavailable. Showing verified projects from Sep 11, 2026.'}<ExternalLink size={13} /></div>
         </div>
       </section>
 
-      <section id="contact" className="contact-section container"><div className="contact-decoration" aria-hidden="true">✳</div><span className="eyebrow"><span className="status-dot" /> GOOD THINGS START WITH A CONVERSATION</span><h2>Have an idea?<br />Let&apos;s make it <span className="serif-word">something.</span></h2><p>A project, a collaboration, or just a shared curiosity.<br />I&apos;d love to hear from you.</p><div className="contact-actions"><a className="button button-primary" href={`mailto:${profile.email}`}>Say hello <Mail size={17} /></a><ExternalLinkButton href={profile.linkedin} className="button button-light"><Linkedin size={17} /> Connect on LinkedIn <ArrowUpRight size={17} /></ExternalLinkButton></div><a className="email-link" href={`mailto:${profile.email}`}>{profile.email}<ArrowUpRight size={14} /></a></section>
+      <section id="contact" className="contact-section container" data-reveal="up"><div className="contact-decoration" aria-hidden="true">✳</div><span className="eyebrow"><span className="status-dot" /> GOOD THINGS START WITH A CONVERSATION</span><h2>Have an idea?<br />Let&apos;s make it <span className="serif-word">something.</span></h2><p>A project, a collaboration, or just a shared curiosity.<br />I&apos;d love to hear from you.</p><div className="contact-actions"><a className="button button-primary" href={`mailto:${profile.email}`}>Say hello <Mail size={17} /></a><ExternalLinkButton href={profile.linkedin} className="button button-light"><Linkedin size={17} /> Connect on LinkedIn <ArrowUpRight size={17} /></ExternalLinkButton></div><a className="email-link" href={`mailto:${profile.email}`}>{profile.email}<ArrowUpRight size={14} /></a></section>
     </main>
     <footer className="container footer"><a className="brand footer-brand" href="#home"><span className="brand-mark">k<span>.</span></span><span>Made with purpose. Built with React.</span></a><span>© {new Date().getFullYear()} {profile.name}</span><div className="footer-links"><ExternalLinkButton href={profile.github} label="Kwete Junior on GitHub"><Github size={19} /></ExternalLinkButton><ExternalLinkButton href={profile.linkedin} label="Kwete Junior on LinkedIn"><Linkedin size={19} /></ExternalLinkButton><a href="#home" aria-label="Back to top"><ArrowUpRight size={20} /></a></div></footer>
     <ProjectDialog project={selectedProject} onClose={closeProject} />
