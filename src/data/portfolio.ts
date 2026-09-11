@@ -149,6 +149,7 @@ export interface Game {
   genre: string
   video?: string
   poster?: string
+  posterAlt?: string
   repository?: string
 }
 
@@ -168,7 +169,8 @@ export const games: Game[] = [
     tagline: 'Run further. Think faster.',
     description: 'A game project that brings movement and mathematics into the same experience. This showcase is ready for its gameplay recording and public source link.',
     genre: 'Educational runner',
-    poster: '/images/math-runner-poster.svg',
+    poster: '/images/math-runner-gameplay.png',
+    posterAlt: 'Math Runner gameplay showing the player facing an incoming wave of enemies in a forest.',
   },
 ]
 
@@ -180,19 +182,24 @@ export const skillGroups = [
       { name: 'JavaScript', icon: 'javascript', color: '#f0c419' },
       { name: 'Python', icon: 'python', color: '#3776ab' },
       { name: 'Dart', icon: 'dart', color: '#0175c2' },
+      { name: 'Java', icon: 'java', color: '#e76f00' },
+      { name: 'C++', icon: 'cplusplus', color: '#00599c' },
       { name: 'SQL', icon: 'database', color: '#6d5f86' },
       { name: 'HTML', icon: 'html', color: '#e34f26' },
       { name: 'CSS', icon: 'css', color: '#663399' },
     ],
   },
   {
-    name: 'Frontend & mobile',
-    description: 'Interfaces people interact with.',
+    name: 'Frontend, mobile & games',
+    description: 'Interfaces and interactive experiences.',
     skills: [
       { name: 'React', icon: 'react', color: '#149eca' },
       { name: 'Flutter', icon: 'flutter', color: '#02569b' },
+      { name: 'Kotlin', icon: 'kotlin', color: '#7f52ff' },
       { name: 'Vite', icon: 'vite', color: '#646cff' },
       { name: 'Provider', icon: 'provider', color: '#7a5aa6' },
+      { name: 'Pygame', icon: 'pygame', color: '#3776ab' },
+      { name: 'graphics.h', icon: 'graphics', color: '#00599c' },
     ],
   },
   {
