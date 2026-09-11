@@ -156,6 +156,23 @@
   border-color: #d9cde2;
 }
 
+.theme-notice {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: max(16px, calc((100vw - 1200px) / 2));
+  width: max-content;
+  max-width: min(360px, calc(100vw - 32px));
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--paper);
+  color: var(--muted);
+  box-shadow: 0 8px 24px #30263718;
+  font-size: 12px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
 .menu-toggle, .navigation .mobile-contact {
   display: none;
 }

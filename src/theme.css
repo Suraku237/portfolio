@@ -8,6 +8,11 @@
   background: #17151df2;
 }
 
+:root[data-theme='dark'] .theme-notice {
+  background: var(--surface-raised);
+  box-shadow: 0 8px 24px var(--theme-shadow);
+}
+
 :root[data-theme='dark'] .brand-mark {
   background: #25252b;
   color: #fff;
