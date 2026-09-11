@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title description">
+  <title id="title">Math Runner game poster</title>
+  <desc id="description">A runner races along a neon track toward floating mathematical challenges.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#102c3b"/>
+      <stop offset=".55" stop-color="#174755"/>
+      <stop offset="1" stop-color="#101e29"/>
+    </linearGradient>
+    <radialGradient id="sun" cx=".78" cy=".18" r=".5">
+      <stop offset="0" stop-color="#ffc75f" stop-opacity=".95"/>
+      <stop offset=".34" stop-color="#d88749" stop-opacity=".35"/>
+      <stop offset="1" stop-color="#172f3e" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="track" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8dd8c1" stop-opacity=".42"/>
+      <stop offset="1" stop-color="#162e39" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="12" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#071218" flood-opacity=".45"/>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="1000" fill="url(#background)"/>
+  <rect width="1600" height="1000" fill="url(#sun)"/>
+
+  <g opacity=".13" stroke="#c8e5df" stroke-width="2">
+    <path d="M0 160H1600M0 320H1600M0 480H1600M0 640H1600M0 800H1600"/>
+    <path d="M160 0V1000M320 0V1000M480 0V1000M640 0V1000M800 0V1000M960 0V1000M1120 0V1000M1280 0V1000M1440 0V1000"/>
+  </g>
+
+  <g fill="#d8e8e5" font-family="Arial, sans-serif">
+    <text x="88" y="92" font-size="22" letter-spacing="8">MATH RUNNER</text>
+    <text x="1270" y="92" font-size="18" letter-spacing="5">STREAK × 08</text>
+  </g>
+  <path d="M320 84H1225" stroke="#d8e8e5" stroke-opacity=".2" stroke-width="2"/>
+
+  <g filter="url(#shadow)" font-family="Arial, sans-serif" font-weight="700">
+    <g transform="translate(365 180)">
+      <rect width="210" height="190" rx="34" fill="#eff5e7"/>
+      <text x="105" y="125" fill="#22414b" font-size="80" text-anchor="middle">12</text>
+    </g>
+    <text x="630" y="305" fill="#cededc" font-size="65" text-anchor="middle">+</text>
+    <g transform="translate(685 180)">
+      <rect width="210" height="190" rx="34" fill="#eff5e7"/>
+      <text x="105" y="125" fill="#22414b" font-size="80" text-anchor="middle">7</text>
+    </g>
+    <text x="950" y="305" fill="#cededc" font-size="65" text-anchor="middle">=</text>
+    <g transform="translate(1005 180)">
+      <rect width="210" height="190" rx="34" fill="#f6c65d"/>
+      <text x="105" y="125" fill="#795918" font-size="80" text-anchor="middle">?</text>
+    </g>
+  </g>
+
+  <path d="M80 935L665 465H935L1520 935Z" fill="url(#track)"/>
+  <path d="M800 480V955M680 480L525 955M920 480L1075 955" stroke="#b7e2d1" stroke-opacity=".28" stroke-width="4"/>
+  <path d="M125 865H1475M210 790H1390M300 710H1300M410 620H1190" stroke="#c3e4da" stroke-opacity=".16" stroke-width="3"/>
+
+  <g transform="translate(365 590)" fill="#9bd3b7" stroke="#d8f2e4" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)">
+    <circle cx="46" cy="42" r="29"/>
+    <path d="M47 74L82 163L25 180L7 111Z"/>
+    <path d="M27 103L-24 146M67 116L129 102M40 172L3 248M70 164L125 227" fill="none" stroke-width="22"/>
+  </g>
+
+  <g font-family="Arial, sans-serif" font-weight="700" text-anchor="middle">
+    <g transform="translate(935 665)">
+      <rect width="115" height="105" rx="19" fill="#ffffff" fill-opacity=".11" stroke="#d9e8e6" stroke-opacity=".28"/>
+      <text x="57" y="69" fill="#dbe9e7" font-size="38">17</text>
+    </g>
+    <g transform="translate(1090 650)">
+      <rect width="115" height="105" rx="19" fill="#83c9a8" stroke="#c8f0dd" stroke-opacity=".7"/>
+      <text x="57" y="69" fill="#173b3d" font-size="38">19</text>
+    </g>
+    <g transform="translate(1245 680)">
+      <rect width="115" height="105" rx="19" fill="#ffffff" fill-opacity=".11" stroke="#d9e8e6" stroke-opacity=".28"/>
+      <text x="57" y="69" fill="#dbe9e7" font-size="38">21</text>
+    </g>
+  </g>
+
+  <g font-family="Arial, sans-serif" fill="#e5f1ef">
+    <text x="88" y="888" font-size="54" font-weight="700">RUN. SOLVE. LEVEL UP.</text>
+    <text x="92" y="932" font-size="20" letter-spacing="5" fill="#a8c5c1">CHOOSE THE RIGHT ANSWER TO KEEP MOVING</text>
+  </g>
+</svg>

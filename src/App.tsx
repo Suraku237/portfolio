@@ -223,11 +223,13 @@ function GameArtwork({ game }: { game: Game }) {
 
 function GameVideo({ game }: { game: Game }) {
   return <div className="game-video">
-    {game.video ? <video controls preload="metadata" aria-label={`${game.name} gameplay video`}>
-      <source src={game.video} />
+    {game.video ? <video controls preload="metadata" poster={game.poster} playsInline aria-label={`${game.name} gameplay video`}>
+      <source src={game.video} type="video/mp4" />
       Your browser does not support embedded video.
     </video> : <>
-      <GameArtwork game={game} />
+      {game.poster
+        ? <img className="game-poster" src={game.poster} alt={`${game.name} game poster`} loading="lazy" />
+        : <GameArtwork game={game} />}
       <div className="video-placeholder">
         <span className="video-play"><Play size={21} fill="currentColor" /></span>
         <span><strong>Gameplay video coming soon</strong><small>A dedicated video space is ready.</small></span>

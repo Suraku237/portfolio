@@ -148,6 +148,7 @@ export interface Game {
   description: string
   genre: string
   video?: string
+  poster?: string
   repository?: string
 }
 
@@ -156,8 +157,10 @@ export const games: Game[] = [
     id: 'grid-survival',
     name: 'Grid Survival',
     tagline: 'Think fast. Hold your ground.',
-    description: 'A game project centered on surviving a grid-based challenge. Gameplay footage and a direct repository link can be connected here when they are publicly available.',
+    description: 'A game project centered on surviving a grid-based challenge. Watch the gameplay recording here, then explore my GitHub for more of my game-development work.',
     genre: 'Survival game',
+    video: '/videos/grid-survival.mp4',
+    poster: '/videos/grid-survival-poster.jpg',
   },
   {
     id: 'math-runner',
@@ -165,6 +168,7 @@ export const games: Game[] = [
     tagline: 'Run further. Think faster.',
     description: 'A game project that brings movement and mathematics into the same experience. This showcase is ready for its gameplay recording and public source link.',
     genre: 'Educational runner',
+    poster: '/images/math-runner-poster.svg',
   },
 ]
 
