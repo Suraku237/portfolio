@@ -3,8 +3,8 @@ import type { ReactNode } from 'react'
 import {
   Activity, ArrowDown, ArrowDownRight, ArrowRight, ArrowUpRight, Award, BookOpen,
   Boxes, Braces, Check, ChevronDown, Code2, Database, ExternalLink, GitBranch,
-  Gamepad2, GitFork, GraduationCap, Layers3, Leaf, Mail, Menu, Monitor, Play,
-  Radio, RefreshCw, Server, Sparkles, Sprout, Star, Terminal, Ticket, Users, X,
+  Gamepad2, GitFork, GraduationCap, Layers3, Leaf, Mail, Menu, Monitor, Moon, Play,
+  Radio, RefreshCw, Server, Sparkles, Sprout, Star, Sun, Terminal, Ticket, Users, X,
 } from 'lucide-react'
 import type { IconType } from 'react-icons'
 import {
@@ -19,6 +19,7 @@ import type { Category, Game, Project } from './data/portfolio'
 import { useGitHub } from './hooks/useGitHub'
 import { useGitHubObservatory } from './hooks/useGitHubObservatory'
 import { useGitHubContributions } from './hooks/useGitHubContributions'
+import { useTheme } from './hooks/useTheme'
 import { groupContributionWeeks } from './lib/githubContributions'
 import './App.css'
 
@@ -78,6 +79,7 @@ function TechnologyIcon({ icon }: { icon: string }) {
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const { theme, toggleTheme, persistenceNotice } = useTheme()
   const toggle = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
@@ -103,12 +105,19 @@ function Header() {
           onClick={() => setMenuOpen(false)}>{label}</NavLink>)}
         <a href={`mailto:${profile.email}`} className="mobile-contact" onClick={() => setMenuOpen(false)}>Let&apos;s talk <ArrowUpRight size={16} /></a>
       </nav>
-      <a className="header-contact" href={`mailto:${profile.email}`}>Let&apos;s talk <ArrowUpRight size={16} /></a>
-      <button ref={toggle} className="menu-toggle icon-button" onClick={() => setMenuOpen(!menuOpen)}
-        aria-expanded={menuOpen} aria-controls="main-navigation" aria-label={menuOpen ? 'Close menu' : 'Open menu'}>
-        {menuOpen ? <X /> : <Menu />}
-      </button>
+      <div className="header-actions">
+        <button className="theme-toggle icon-button" onClick={toggleTheme} aria-label="Dark mode"
+          aria-pressed={theme === 'dark'} title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}>
+          {theme === 'dark' ? <Sun size={18} aria-hidden="true" /> : <Moon size={18} aria-hidden="true" />}
+        </button>
+        <a className="header-contact" href={`mailto:${profile.email}`}>Let&apos;s talk <ArrowUpRight size={16} /></a>
+        <button ref={toggle} className="menu-toggle icon-button" onClick={() => setMenuOpen(!menuOpen)}
+          aria-expanded={menuOpen} aria-controls="main-navigation" aria-label={menuOpen ? 'Close menu' : 'Open menu'}>
+          {menuOpen ? <X /> : <Menu />}
+        </button>
+      </div>
     </div>
+    {persistenceNotice && <p className="theme-notice" role="status">{persistenceNotice}</p>}
   </header>
 }
 

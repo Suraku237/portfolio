@@ -2,8 +2,9 @@
 @import '@fontsource-variable/manrope';
 :root {
   font-family: 'DM Sans Variable', sans-serif;
-  color: #25252b;
-  background: #fcfbf8;
+  color: var(--ink);
+  background: var(--paper);
+  color-scheme: light;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -13,6 +14,23 @@
   --muted: #685b70;
   --purple: #7253be;
   --border: #e8e6e1;
+  --surface: #fffdfb;
+  --surface-raised: #fff;
+  --surface-soft: #f7f4f8;
+  --accent-soft: #eee8f7;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --paper: #17151d;
+  --ink: #f2edf7;
+  --muted: #beb2ca;
+  --purple: #c0a3f5;
+  --border: #39313f;
+  --surface: #211d29;
+  --surface-raised: #292331;
+  --surface-soft: #302739;
+  --accent-soft: #352847;
 }
 
 * {
@@ -103,7 +121,7 @@ button svg, a svg {
   left: 20px;
   z-index: 200;
   background: var(--ink);
-  color: white;
+  color: var(--paper);
   padding: 14px 20px;
   border-radius: 5px;
 }

@@ -1,0 +1,405 @@
+:root[data-theme='dark'] {
+  --theme-success: #a9d8b1;
+  --theme-success-surface: #24372c;
+  --theme-shadow: #09070f66;
+}
+
+:root[data-theme='dark'] .site-header {
+  background: #17151df2;
+}
+
+:root[data-theme='dark'] .brand-mark {
+  background: #25252b;
+  color: #fff;
+  box-shadow: 0 0 0 1px var(--border);
+}
+
+:root[data-theme='dark'] :is(
+  .brand-name > span,
+  .navigation > a,
+  .hero-eyebrow,
+  .highlight-intro .eyebrow,
+  .page-directory-card > span
+) {
+  color: var(--muted);
+}
+
+:root[data-theme='dark'] :is(
+  .navigation > a:hover,
+  .navigation > a[aria-current],
+  .section-heading .eyebrow,
+  .about-copy > .eyebrow,
+  .serif-word,
+  .stat > strong > span,
+  .text-link,
+  .about-values span,
+  .about-topline svg,
+  .course-row > svg,
+  .repo-row > svg,
+  .project-highlights li > svg,
+  .contact-section h2 .serif-word
+) {
+  color: var(--purple);
+}
+
+:root[data-theme='dark'] :is(
+  .text-link:hover,
+  .repo-row strong,
+  .course-name,
+  .credential-recipient strong,
+  .about-visual-bottom
+) {
+  color: var(--ink);
+}
+
+:root[data-theme='dark'] :is(
+  .repo-row:hover strong,
+  .course-row:hover .course-name,
+  .email-link:hover,
+  .footer-links a:hover
+) {
+  color: var(--purple);
+}
+
+:root[data-theme='dark'] :is(.header-contact, .theme-toggle) {
+  background: var(--accent-soft);
+  border-color: var(--border);
+  color: var(--ink);
+}
+
+:root[data-theme='dark'] :is(.header-contact:hover, .theme-toggle:hover, .menu-toggle:hover) {
+  background: var(--surface-soft);
+  border-color: var(--purple);
+  color: var(--ink);
+}
+
+:root[data-theme='dark'] .button-primary {
+  background: var(--purple);
+  border-color: var(--purple);
+  color: var(--paper);
+}
+
+:root[data-theme='dark'] .button-primary:hover {
+  background: #d5bef9;
+  border-color: #d5bef9;
+  box-shadow: 0 4px 14px var(--theme-shadow);
+}
+
+:root[data-theme='dark'] :is(.button-secondary, .button-light, .contact-actions .button-light) {
+  background: var(--surface-raised);
+  border-color: var(--border);
+  color: var(--ink);
+}
+
+:root[data-theme='dark'] :is(.button-secondary:hover, .button-light:hover) {
+  background: var(--accent-soft);
+  border-color: var(--purple);
+}
+
+:root[data-theme='dark'] .hero-eyebrow .status-dot {
+  background: var(--theme-success);
+  box-shadow: 0 0 0 4px var(--theme-success-surface);
+}
+
+:root[data-theme='dark'] .tiny-avatars svg {
+  background: var(--accent-soft);
+  color: var(--purple);
+}
+
+:root[data-theme='dark'] .tiny-avatars svg:nth-child(2) {
+  background: var(--theme-success-surface);
+  color: var(--theme-success);
+}
+
+:root[data-theme='dark'] .tiny-avatars svg:nth-child(3) {
+  background: #3a3025;
+  color: #e3c194;
+}
+
+/* Illustrations retain their light palette, including inherited copy colors. */
+:root[data-theme='dark'] :is(.hero-art, .project-preview-button) {
+  --paper: #fcfbf8;
+  --ink: #25252b;
+  --muted: #685b70;
+  --purple: #7253be;
+  --border: #e8e6e1;
+  color: #25252b;
+}
+
+:root[data-theme='dark'] .project-filters button:hover {
+  background: var(--surface-soft);
+}
+
+:root[data-theme='dark'] .project-filters button[aria-pressed=true] {
+  background: var(--purple);
+  border-color: var(--purple);
+  color: var(--paper);
+}
+
+:root[data-theme='dark'] .project-filters button > span {
+  background: var(--surface-raised);
+  color: var(--ink);
+}
+
+:root[data-theme='dark'] .project-filters button[aria-pressed=true] > span {
+  background: #17151d1f;
+  color: var(--paper);
+}
+
+:root[data-theme='dark'] :is(.tag-list > span, .skill-tags > span:not(.technology-chip)) {
+  background: var(--surface-raised);
+  border-color: var(--border);
+  color: var(--muted);
+}
+
+:root[data-theme='dark'] :is(.about-section, .credentials-section, .skills-principles) {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+:root[data-theme='dark'] :is(
+  .skill-card,
+  .page-directory-card,
+  .about-details article,
+  .github-panel,
+  .observatory-panel
+) {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+:root[data-theme='dark'] :is(
+  .credential-card,
+  .credential-outcomes article,
+  .principles-grid article,
+  .language-legend > div,
+  .observatory-notice,
+  .observatory-empty,
+  .observatory-method,
+  .github-panel-footer
+) {
+  background: var(--surface-raised);
+  border-color: var(--border);
+}
+
+:root[data-theme='dark'] .credential-card {
+  box-shadow: 0 6px 20px var(--theme-shadow);
+}
+
+:root[data-theme='dark'] :is(.skill-card:hover, .page-directory-card:hover, .game-card:hover) {
+  border-color: var(--purple);
+  box-shadow: 0 15px 35px var(--theme-shadow);
+}
+
+:root[data-theme='dark'] .about-visual {
+  background: var(--surface-soft);
+  border-color: var(--border);
+}
+
+:root[data-theme='dark'] .personal-photo-frame {
+  background: var(--surface-raised);
+  border-color: var(--surface-raised);
+  box-shadow: 0 18px 38px var(--theme-shadow);
+}
+
+:root[data-theme='dark'] .photo-corner {
+  border-color: var(--purple);
+}
+
+:root[data-theme='dark'] .profile-label {
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: 0 4px 10px var(--theme-shadow);
+}
+
+:root[data-theme='dark'] .profile-label .status-dot {
+  background: var(--theme-success);
+}
+
+:root[data-theme='dark'] :is(
+  .profile-orbit-icon,
+  .about-details article > span,
+  .principles-grid article > svg,
+  .skill-icon,
+  .credential-award,
+  .verified-badge,
+  .course-number,
+  .repo-icon
+) {
+  background: var(--accent-soft);
+  border-color: var(--border);
+  color: var(--purple);
+}
+
+:root[data-theme='dark'] .skill-card:nth-child(2) .skill-icon {
+  background: var(--theme-success-surface);
+  color: var(--theme-success);
+}
+
+:root[data-theme='dark'] .skill-card:nth-child(3) .skill-icon {
+  background: #263346;
+  color: #b1c8ed;
+}
+
+:root[data-theme='dark'] .skill-card:nth-child(4) .skill-icon {
+  background: #3a3025;
+  color: #e3c194;
+}
+
+/* Light chips preserve brand colors and keep near-black icons such as Express visible. */
+:root[data-theme='dark'] .skill-tags > .technology-chip {
+  background: #fff;
+  border-color: #d9d1e2;
+}
+
+:root[data-theme='dark'] .technology-chip > span {
+  color: #685b70;
+}
+
+:root[data-theme='dark'] .skill-tags > .technology-chip:hover {
+  border-color: currentColor;
+}
+
+:root[data-theme='dark'] .credential-award {
+  outline-color: var(--border);
+}
+
+:root[data-theme='dark'] :is(
+  .credential-details,
+  .course-row,
+  .github-panel-heading,
+  .repo-row,
+  .preview-disclaimer
+) {
+  border-color: var(--border);
+}
+
+:root[data-theme='dark'] .course-row:hover {
+  background: var(--surface-raised);
+}
+
+:root[data-theme='dark'] .github-status {
+  background: var(--surface-raised);
+  border-color: var(--border);
+  color: var(--muted);
+}
+
+:root[data-theme='dark'] .github-status.is-live {
+  background: var(--theme-success-surface);
+  border-color: #46654c;
+  color: var(--theme-success);
+}
+
+:root[data-theme='dark'] .github-status.is-live .status-dot {
+  background: var(--theme-success);
+}
+
+:root[data-theme='dark'] .observatory-source .status-dot.is-live {
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
+
+:root[data-theme='dark'] :is(.language-stack, .contribution-data thead) {
+  background: var(--surface-soft);
+}
+
+:root[data-theme='dark'] .contribution-data summary {
+  color: var(--ink);
+}
+
+:root[data-theme='dark'] :is(.contribution-data summary:hover, .observatory-method summary:hover) {
+  color: var(--purple);
+}
+
+:root[data-theme='dark'] :is(.activity-scroll, .weekly-scroll, .contribution-table-scroll) {
+  scrollbar-color: var(--purple) var(--surface);
+}
+
+:root[data-theme='dark'] .activity-cell {
+  background: var(--surface-soft);
+}
+
+:root[data-theme='dark'] .activity-cell.level-1 { background: #806294; }
+:root[data-theme='dark'] .activity-cell.level-2 { background: #9878b1; }
+:root[data-theme='dark'] .activity-cell.level-3 { background: #b190d3; }
+:root[data-theme='dark'] .activity-cell.level-4 { background: #d1b5fb; }
+
+:root[data-theme='dark'] .weekly-column i {
+  background: linear-gradient(to top, #9878b1, var(--purple));
+}
+
+:root[data-theme='dark'] .contact-section {
+  background:
+    radial-gradient(ellipse at 15% 20%, var(--accent-soft), transparent 70%),
+    var(--surface-soft);
+  border-color: var(--border);
+}
+
+:root[data-theme='dark'] .contact-decoration {
+  color: #806294;
+}
+
+:root[data-theme='dark'] .project-dialog {
+  background: var(--surface);
+  border-color: var(--border);
+  box-shadow: 0 20px 100px #09070faa;
+}
+
+:root[data-theme='dark'] .project-dialog::backdrop {
+  background: #09070fc2;
+}
+
+:root[data-theme='dark'] .dialog-close {
+  background: var(--surface-raised);
+  color: var(--ink);
+}
+
+:root[data-theme='dark'] .dialog-close:hover {
+  background: var(--accent-soft);
+}
+
+:root[data-theme='dark'] .games-section {
+  background:
+    radial-gradient(circle at 9% 13%, #805bab15 0 2px, transparent 3px),
+    radial-gradient(circle at 91% 82%, #7ba18a18 0 2px, transparent 3px),
+    var(--surface);
+  background-size: 34px 34px, 43px 43px, auto;
+  color: var(--ink);
+}
+
+:root[data-theme='dark'] .game-card {
+  background: var(--surface-raised);
+  border-color: var(--border);
+  box-shadow: 0 24px 70px var(--theme-shadow);
+}
+
+:root[data-theme='dark'] .game-art {
+  color: #f9f6fb;
+}
+
+:root[data-theme='dark'] :is(.game-meta, .game-copy > p:not(.game-tagline), .games-note) {
+  color: var(--muted);
+}
+
+:root[data-theme='dark'] :is(.game-tagline, .game-copy .text-link) {
+  color: var(--purple);
+}
+
+:root[data-theme='dark'] .game-copy .text-link:hover {
+  color: var(--ink);
+}
+
+:root[data-theme='dark'] .games-note code {
+  background: var(--surface-raised);
+  color: var(--ink);
+}
+
+@media (max-width: 820px) {
+  :root[data-theme='dark'] .navigation {
+    background: var(--surface);
+    box-shadow: 0 8px 20px var(--theme-shadow);
+  }
+
+  :root[data-theme='dark'] .navigation > a[aria-current] {
+    background: var(--accent-soft);
+  }
+}

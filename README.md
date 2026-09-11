@@ -14,11 +14,18 @@ npm run dev
 ```sh
 npm run lint
 npm run test:github
+npm run test:theme
 npm run build
 npm run preview
 ```
 
 The production build is generated in `dist`. Deploy that directory to any static host. For hosting beneath a subdirectory, configure Vite's `base` in `vite.config.ts` before building.
+
+## Appearance
+
+The header's sun/moon button switches every page between light and dark mode. The initial theme follows the device preference; an explicit choice is saved under `portfolio-theme` in browser local storage and synchronized across tabs. Clearing that preference restores system-following behavior. If storage is blocked or full, the control still works for the current visit and displays a notice.
+
+[`public/theme.js`](public/theme.js) applies the preference before React renders to avoid a light flash on dark-mode reloads. Photos, gameplay footage, and original project illustrations keep their original colors. Existing reduced-motion preferences are respected in either theme.
 
 ## Update your content
 
